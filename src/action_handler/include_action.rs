@@ -69,12 +69,13 @@ fn import_files(file_name: &str, other_files: &mut Args) {
 
 fn import_dir(file_name: &str, other_files: &mut Args) {
     let path = Path::new(file_name);
+    println!("file name is {}", file_name);
     for entry in fs::read_dir(path).expect("Unable to list") {
         let entry = entry.expect("unable to get entry");
         let file = entry.path().into_os_string().into_string().unwrap();
-        if entry.path().is_dir() {
+        if entry.path().is_dir() && file_name != "./.git" {
             import_dir(&file, other_files); 
-        } else {
+        } else if file_name != "./.git" {
             import_files(&file, other_files);
         }
     }
