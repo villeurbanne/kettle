@@ -10,16 +10,18 @@ struct Recipe {
 }
 
 pub fn handle_action(kettle_name: &str, destination_folder: &str, kettle_repo_path: &str) {
-    if Path::new(destination_folder).is_dir() {
-        println!("⚠️  a folder already exists with this name")
+    if Path::new(destination_folder).is_dir() && destination_folder != "." {
+        println!("⚠️  a folder already exists with this name");
     } else {
         let repo_kettle_vector = vec![kettle_repo_path, kettle_name];
         let repo_kettle_path = repo_kettle_vector.concat();
         if Path::new(&repo_kettle_path).exists() {
             let new_local_folder_vector = vec![destination_folder];
             let new_local_folder_path = new_local_folder_vector.concat();
-            fs::create_dir(new_local_folder_path)
-                .expect("Error encountered while creating destination folder");
+            if destination_folder != "." {
+                fs::create_dir(new_local_folder_path)
+                    .expect("Error encountered while creating destination folder");
+            }
             let kettle_repo_recipe_vector = vec![kettle_repo_path, kettle_name, "/kettle.json"];
             let kettle_recipe = fs::read_to_string(kettle_repo_recipe_vector.concat())
                 .expect("Error encountered while reading the recipe file");
