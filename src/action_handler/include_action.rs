@@ -11,19 +11,19 @@ struct Recipe {
     kettle_path: String,
 }
 
-pub fn handle_action(file_name: &str, other_files: &mut Args) {
+pub fn handle_action(file_name: &str, other_files: &mut Args, state: i32) {
     if Path::new(file_name).exists() {
         if Path::new(&file_name).is_dir() {
-            import_dir(&file_name, other_files);
+            import_dir(&file_name, other_files, state);
         } else {
-            import_files(&file_name, other_files);
+            import_files(&file_name, other_files, state);
         }
     } else {
         println!("⚠️  This file doesn't exist");
     }
 }
 
-fn import_files(file_name: &str, other_files: &mut Args) {
+fn import_files(file_name: &str, other_files: &mut Args, state: i32) {
     let kettle_recipe = fs::read_to_string("kettle.json")
         .expect("Error encountered while reading the recipe file");
 
@@ -47,7 +47,7 @@ fn import_files(file_name: &str, other_files: &mut Args) {
     while next_file != "" {
         let file_name = next_file.clone();
         if Path::new(&file_name).is_dir() {
-            import_dir(&file_name, other_files);
+            import_dir(&file_name, other_files, state);
         } else {
             let included_file_name = String::from(next_file);
 
@@ -67,16 +67,15 @@ fn import_files(file_name: &str, other_files: &mut Args) {
     }
 }
 
-fn import_dir(file_name: &str, other_files: &mut Args) {
+fn import_dir(file_name: &str, other_files: &mut Args, state: i32) {
     let path = Path::new(file_name);
-    println!("file name is {}", file_name);
     for entry in fs::read_dir(path).expect("Unable to list") {
         let entry = entry.expect("unable to get entry");
         let file = entry.path().into_os_string().into_string().unwrap();
-        if entry.path().is_dir() && file_name != "./.git" {
-            import_dir(&file, other_files); 
+        if entry.path().is_dir() && file_name != "./.git" && state == 0 {
+            import_dir(&file, other_files, state); 
         } else if file_name != "./.git" {
-            import_files(&file, other_files);
+            import_files(&file, other_files, state);
         }
     }
 

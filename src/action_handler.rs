@@ -37,10 +37,18 @@ pub fn handle_action(args: &mut std::env::Args, kettle_repo_path: &str) {
         }
         "list" => list_action::handle_action(kettle_repo_path),
         "include" => {
-            let first_file_name = args.nth(0).unwrap_or_default();
-            if check_default(&first_file_name, file_name_warning) {
-                let other_files = args;
-                include_action::handle_action(&first_file_name, other_files);
+            let mut first_file_name = args.nth(0).unwrap_or_default();
+            if first_file_name == "-r" {
+                first_file_name = args.nth(0).unwrap_or_default();
+                if check_default(&first_file_name, file_name_warning) {
+                    let other_files = args;
+                    include_action::handle_action(&first_file_name, other_files, 1);
+                }
+            } else {
+                if check_default(&first_file_name, file_name_warning) {
+                    let other_files = args;
+                    include_action::handle_action(&first_file_name, other_files, 0);
+                }
             }
         }
         "exclude" => {

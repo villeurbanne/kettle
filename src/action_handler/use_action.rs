@@ -58,7 +58,12 @@ pub fn handle_action(kettle_name: &str, destination_folder: &str, kettle_repo_pa
                 fs::copy(repo_file_path, new_local_file_path)
                     .expect("Error encountered copying files from repo to the destination folder");
             }
-            println!("✅ created successfully at 📁{destination_folder}/");
+            if destination_folder != "."  {
+                println!("✅ created successfully at 📁{destination_folder}");
+            } else {
+                println!("✅ created successfully at 📁local dir");
+            }
+        
         } else {
             println!("⚠️  this kettle doesn't exist");
         }
