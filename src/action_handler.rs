@@ -95,6 +95,7 @@ pub fn handle_action(args: &mut std::env::Args, kettle_repo_path: &str) {
             );
             println!("  use <kettle_name> <destination_folder> : Import a kettle to the destination_folder");
             println!("  list                                   : Lists all the kettles in the kettle repo");
+            println!("  cli                                   : Launches the cli version of kettle");
             println!("");
             println!("- created with ❤️  by @saravenpi");
             println!("- https://github.com/saravenpi\n");
