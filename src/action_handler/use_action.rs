@@ -11,7 +11,7 @@ struct Recipe {
 
 pub fn handle_action(kettle_name: &str, destination_folder: &str, kettle_repo_path: &str) {
     if Path::new(destination_folder).is_dir() && destination_folder != "." {
-        println!("⚠️  a folder already exists with this name");
+        println!("\n⚠️  a folder already exists with this name");
     } else {
         let repo_kettle_vector = vec![kettle_repo_path, kettle_name];
         let repo_kettle_path = repo_kettle_vector.concat();
@@ -20,14 +20,14 @@ pub fn handle_action(kettle_name: &str, destination_folder: &str, kettle_repo_pa
             let new_local_folder_path = new_local_folder_vector.concat();
             if destination_folder != "." {
                 fs::create_dir(new_local_folder_path)
-                    .expect("Error encountered while creating destination folder");
+                    .expect("\nError encountered while creating destination folder");
             }
             let kettle_repo_recipe_vector = vec![kettle_repo_path, kettle_name, "/kettle.json"];
             let kettle_recipe = fs::read_to_string(kettle_repo_recipe_vector.concat())
-                .expect("Error encountered while reading the recipe file");
+                .expect("\nError encountered while reading the recipe file");
 
             let recipe_json: Recipe = serde_json::from_str(&kettle_recipe)
-                .expect("Error encountered while deserialising the json recipe");
+                .expect("\nError encountered while deserialising the json recipe");
 
             for file_name in recipe_json.imported_files {
                 let repo_file_path = vec![
@@ -52,20 +52,20 @@ pub fn handle_action(kettle_name: &str, destination_folder: &str, kettle_repo_pa
                 }
                 if !Path::new(&local_folder_path).exists() {
                     fs::create_dir_all(&local_folder_path)
-                        .expect("Error creating directory structure");
+                        .expect("\nError creating directory structure");
                 }
 
                 fs::copy(repo_file_path, new_local_file_path)
-                    .expect("Error encountered copying files from repo to the destination folder");
+                    .expect("\nError encountered copying files from repo to the destination folder");
             }
             if destination_folder != "."  {
-                println!("✅ created successfully at 📁{destination_folder}");
+                println!("\n✅ created successfully at 📁{destination_folder}");
             } else {
-                println!("✅ created successfully at 📁local dir");
+                println!("\n✅ created successfully at 📁local dir");
             }
         
         } else {
-            println!("⚠️  this kettle doesn't exist");
+            println!("\n⚠️  this kettle doesn't exist");
         }
     }
 }

@@ -19,16 +19,16 @@ pub fn handle_action(file_name: &str, other_files: &mut Args, state: i32) {
             import_files(&file_name, other_files, state);
         }
     } else {
-        println!("⚠️  This file doesn't exist");
+        println!("\n⚠️  This file doesn't exist");
     }
 }
 
 fn import_files(file_name: &str, other_files: &mut Args, state: i32) {
     let kettle_recipe = fs::read_to_string("kettle.json")
-        .expect("Error encountered while reading the recipe file");
+        .expect("\nError encountered while reading the recipe file");
 
     let mut recipe_json: Recipe = serde_json::from_str(&kettle_recipe)
-        .expect("Error encountered while deserialising the json recipe");
+        .expect("\nError encountered while deserialising the json recipe");
     let included_file_name = String::from(file_name);
 
     recipe_json.imported_files.push(included_file_name);
@@ -39,9 +39,9 @@ fn import_files(file_name: &str, other_files: &mut Args, state: i32) {
 
     recipe_file
         .write_all(new_recipe_json.as_bytes())
-        .expect("Error while writing to file");
+        .expect("\nError while writing to file");
 
-    println!("✅ {file_name} successfully included !");
+    println!("\n✅ {file_name} successfully included !");
 
     let mut next_file = other_files.next().unwrap_or_default();
     while next_file != "" {
@@ -59,9 +59,9 @@ fn import_files(file_name: &str, other_files: &mut Args, state: i32) {
 
             recipe_file
                 .write_all(new_recipe_json.as_bytes())
-                .expect("Error while writing to file");
+                .expect("\nError while writing to file");
 
-            println!("✅ {file_name} successfully included !");
+            println!("\n✅ {file_name} successfully included !");
             next_file = other_files.next().unwrap_or_default();
         }
     }

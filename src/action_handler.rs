@@ -5,6 +5,7 @@ mod init_action;
 mod list_action;
 mod save_action;
 mod use_action;
+mod cli_action;
 
 fn check_default(unwraped_data: &str, message: &str) -> bool {
     if unwraped_data == "" {
@@ -35,7 +36,15 @@ pub fn handle_action(args: &mut std::env::Args, kettle_repo_path: &str) {
                 init_action::handle_action(&kettle_name, kettle_repo_path);
             }
         }
-        "list" => list_action::handle_action(kettle_repo_path),
+        "list" => {
+            let flag = args.nth(0).unwrap_or_default();
+
+            if flag == "-p" {
+                list_action::handle_action(kettle_repo_path, 1);
+            } else {
+                list_action::handle_action(kettle_repo_path, 0);
+            }
+        }
         "include" => {
             let mut first_file_name = args.nth(0).unwrap_or_default();
             if first_file_name == "-r" {
@@ -66,8 +75,11 @@ pub fn handle_action(args: &mut std::env::Args, kettle_repo_path: &str) {
                 }
             }
         }
+        "cli" => {
+            cli_action::handle_action();
+        }
         "-h" | "--help" | "-help" | "help" => {
-            println!(" * Welcome to Kettle 🫖    * ");
+            println!("\n * Welcome to Kettle 🫖    * ");
             println!(" * the boilerplate manager *");
             println!("");
             println!("COMMANDS:");

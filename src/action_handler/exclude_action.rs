@@ -13,10 +13,10 @@ struct Recipe {
 pub fn handle_action(file_name: &str) {
     if Path::new(file_name).exists() {
         let kettle_recipe = fs::read_to_string("kettle.json")
-            .expect("Error encountered while reading the recipe file");
+            .expect("\nError encountered while reading the recipe file");
 
         let mut recipe_json: Recipe = serde_json::from_str(&kettle_recipe)
-            .expect("Error encountered while deserialising the json recipe");
+            .expect("\nError encountered while deserialising the json recipe");
 
         let included_file_name = String::from(file_name);
         if recipe_json.imported_files.contains(&included_file_name) {
@@ -33,12 +33,12 @@ pub fn handle_action(file_name: &str) {
 
             recipe_file
                 .write_all(new_recipe_json.as_bytes())
-                .expect("Error while writing to file");
+                .expect("\nError while writing to file");
         } else {
-            println!("The file was already not in the kettle.json")
+            println!("\nThe file was already not in the kettle.json")
         }
-        println!("✅ {file_name} successfully excluded !");
+        println!("\n✅ {file_name} successfully excluded !");
     } else {
-        println!("⚠️  This file doesn't exist");
+        println!("\n⚠️  This file doesn't exist");
     }
 }
