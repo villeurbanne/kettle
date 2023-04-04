@@ -41,7 +41,7 @@ fn import_files(file_name: &str, other_files: &mut Args, state: i32) {
         .write_all(new_recipe_json.as_bytes())
         .expect("\nError while writing to file");
 
-    println!("\n✅ {file_name} successfully included !");
+    println!("✅ {file_name} successfully included !");
 
     let mut next_file = other_files.next().unwrap_or_default();
     while next_file != "" {

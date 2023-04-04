@@ -37,7 +37,7 @@ pub fn handle_action(file_name: &str) {
         } else {
             println!("\nThe file was already not in the kettle.json")
         }
-        println!("\n✅ {file_name} successfully excluded !");
+        println!("✅ {file_name} successfully excluded !");
     } else {
         println!("\n⚠️  This file doesn't exist");
     }
