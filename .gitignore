@@ -4,5 +4,4 @@
 
 # build
 target/
-install.sh
 kettle.json
