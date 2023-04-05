@@ -60,9 +60,7 @@ exclude () {
 
 loop () {
 
-    echo ""
-
-    CHOICE=$(gum choose help init include exclude save delete use list)
+    CHOICE=$(gum choose help init include exclude save delete use list "" quit)
 
     if [ $CHOICE = 'help' ]; then
         kettle help
@@ -80,11 +78,13 @@ loop () {
         use
     elif [ $CHOICE = 'list' ]; then
         kettle list
+    elif [ $CHOICE = 'quit' ]; then
+        gum confirm && exit 0 || echo "Oh .. welcome back !"
     else
         echo "Invalid choice"
     fi
 
-    INPUT=$(gum choose --header="Do you want to continue ? " yes no)
+    INPUT=$(gum choose --header="Do you want to perfom another action ? " yes no)
 
     if [ $INPUT = 'yes' ]; then
         loop
