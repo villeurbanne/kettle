@@ -4,4 +4,6 @@
 
 # build
 target/
-kettle.json
+
+# files
+ressources/

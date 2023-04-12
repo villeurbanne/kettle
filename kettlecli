@@ -1,7 +1,7 @@
 #!/bin/sh
 
 init () {
-    NAME=$(gum input "Enter the name of the kettle: ")
+    NAME=$(gum input --placeholder "Enter the name of the kettle: ")
     kettle init $NAME
 }
 
