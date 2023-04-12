@@ -1,0 +1,9 @@
+# mac stuff
+.DS_Store
+*.dSYM/
+
+# build
+target/
+
+# files
+ressources/

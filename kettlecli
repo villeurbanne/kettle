@@ -1,0 +1,96 @@
+#!/bin/sh
+
+init () {
+    NAME=$(gum input --placeholder "Enter the name of the kettle: ")
+    kettle init $NAME
+}
+
+delete () {
+    kettle list -p > .kettle_list.txt
+    NAME=$(cat .kettle_list.txt | gum choose --header="Which kettle do you want to delete ? ")
+    rm .kettle_list.txt
+    kettle delete $NAME
+}
+
+use () {
+    kettle list -p > .kettle_list.txt
+    NAME=$(cat .kettle_list.txt | gum choose --header="Which kettle do you want to use ? ")
+    rm .kettle_list.txt
+
+    FOLDER=$(gum input --placeholder "Where do you want to use it ? ")
+    kettle use $NAME $FOLDER
+}
+
+include () {
+    FILES=()
+    while :
+    do
+        FILE=$(gum file $HOME --directory)
+        if [[ ! " ${FILES[*]} " =~ " ${FILE} " ]]; then
+            FILES+=($FILE)
+        fi
+
+        CHOICE=$(gum choose --header="Do you want to continue ? " continue finished)
+        if [ $CHOICE = 'finished' ]; then
+            break
+        fi
+    done
+
+    kettle include ${FILES[*]}
+}
+
+
+exclude () {
+    FILES=()
+    while :
+    do
+        FILE=$(gum file $HOME --directory)
+        if [[ ! " ${FILES[*]} " =~ " ${FILE} " ]]; then
+            FILES+=($FILE)
+        fi
+
+        CHOICE=$(gum choose --header="Do you want to continue ? " continue finished)
+        if [ $CHOICE = 'finished' ]; then
+            break
+        fi
+    done
+
+    kettle exclude ${FILES[*]}
+}
+
+loop () {
+
+    CHOICE=$(gum choose help init include exclude save delete use list "" quit)
+
+    if [ $CHOICE = 'help' ]; then
+        kettle help
+    elif [ $CHOICE = 'init' ]; then
+        init
+    elif [ $CHOICE = 'include' ]; then
+        include
+    elif [ $CHOICE = 'exclude' ]; then
+        exclude
+    elif [ $CHOICE = 'save' ]; then
+        kettle save
+    elif [ $CHOICE = 'delete' ]; then
+        delete
+    elif [ $CHOICE = 'use' ]; then
+        use
+    elif [ $CHOICE = 'list' ]; then
+        kettle list
+    elif [ $CHOICE = 'quit' ]; then
+        gum confirm && exit 0 || echo "Oh .. welcome back !"
+    else
+        echo "Invalid choice"
+    fi
+
+    INPUT=$(gum choose --header="Do you want to perfom another action ? " yes no)
+
+    if [ $INPUT = 'yes' ]; then
+        loop
+    fi
+}
+
+echo ""
+gum spin -s dot --title '🫖 Loading kettle CLI' sleep 1
+loop
