@@ -58,6 +58,14 @@ exclude () {
     kettle exclude ${FILES[*]}
 }
 
+end () {
+    INPUT=$(gum choose --header="Do you want to perfom another action ? " yes no)
+
+    if [ $INPUT = 'yes' ]; then
+        loop
+    fi
+}
+
 loop () {
 
     CHOICE=$(gum choose help init include exclude save delete use list "" quit)
@@ -79,18 +87,15 @@ loop () {
     elif [ $CHOICE = 'list' ]; then
         kettle list
     elif [ $CHOICE = 'quit' ]; then
-        gum confirm && exit 0 || echo "Oh .. welcome back !"
+        gum confirm && exit 0 || echo "Oh .. welcome back !\n" && loop
     else
-        echo "Invalid choice"
+        echo "Invalid choice\n"
     fi
 
-    INPUT=$(gum choose --header="Do you want to perfom another action ? " yes no)
-
-    if [ $INPUT = 'yes' ]; then
-        loop
-    fi
+    end
 }
 
 echo ""
-gum spin -s dot --title '🫖 Loading kettle CLI' sleep 1
+gum style --border normal --margin "1" --padding "1 2" --border-foreground 212 "Hello, there! Welcome to $(gum style --foreground 212 'Kettle')."
+gum spin -s monkey --title '🫖 Loading kettle CLI' sleep 1
 loop
