@@ -12,6 +12,11 @@ struct Recipe {
 
 pub fn handle_action(file_name: &str) {
     if Path::new(file_name).exists() {
+        if !Path::new("./kettle.json").exists() {
+            println!("\n⚠️  This folder is not a kettle");
+            println!("use `kettle init <kettle_name>` to initialise a kettle");
+            return;
+        }
         let kettle_recipe = fs::read_to_string("kettle.json")
             .expect("\nError encountered while reading the recipe file");
 
