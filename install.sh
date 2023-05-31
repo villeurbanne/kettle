@@ -10,6 +10,7 @@ if [ $CHOICE = "linux" ]; then
     gum spin -s dot --title '* 🐧 Installing for linux' sleep 1
     sudo cp target/release/kettle /usr/bin
     sudo cp kettlecli /usr/bin
+
 elif [ $CHOICE = "mac" ]; then
     gum spin -s dot --title '* 🍎 Installing for mac' sleep 1
     sudo cp target/release/kettle /usr/local/bin

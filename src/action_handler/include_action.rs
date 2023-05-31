@@ -12,7 +12,13 @@ struct Recipe {
 }
 
 pub fn handle_action(file_name: &str, other_files: &mut Args, state: i32) {
-    if Path::new(file_name).exists() {
+    if !Path::new("./kettle.json").exists() {
+        println!("\n⚠️  This folder is not a kettle");
+        println!("use `kettle init <kettle_name>` to initialise a kettle");
+        return;
+    }
+
+    if Path::new(file_name).exists() && Path::new("./kettle.json").exists(){
         if Path::new(&file_name).is_dir() {
             import_dir(&file_name, other_files, state);
         } else {
