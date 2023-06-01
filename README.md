@@ -21,7 +21,7 @@
 </div>
 
 <br>
-<p align="center">The above example is still in very early BETA. <br> v0.2 </p>
+<p align="center">The above example is still in its first release. <br> v1.O.O </p>
 
 
 ###
@@ -68,6 +68,8 @@
   # to include <file/s> in the kettle
   kettle save
   # to save the kettle
+  kettle get <username@kettle>
+  # to install a kettle from the marketplace
   ```
   
   all thats left now is using :
