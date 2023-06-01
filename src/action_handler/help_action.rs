@@ -18,7 +18,7 @@ pub fn handle_action() {
     println!("  list                                   : Lists all the kettles in the kettle repo");
     println!("  cli                                   : Launches the cli version of kettle");
     println!("");
-    println!("- created with ❤️  by @saravenpi");
-    println!("- https://github.com/saravenpi\n");
+    println!("- created with ❤️  by poopy");
+    println!("- https://github.com/villeurbanne\n");
 }
 
