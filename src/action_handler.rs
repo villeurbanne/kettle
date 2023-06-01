@@ -7,6 +7,7 @@ mod save_action;
 mod use_action;
 mod help_action;
 mod cli_action;
+mod get_action;
 
 fn check_default(unwraped_data: &str, message: &str) -> bool
 {
@@ -26,6 +27,7 @@ fn init_pre(action_args: &mut std::env::Args, kettle_repo_path: &str,
         init_action::handle_action(&kettle_name, kettle_repo_path);
     }
 }
+
 fn delete_pre(action_args: &mut std::env::Args, kettle_name_warning: &str, kettle_repo_path: &str )
 {
     let kettle_name = action_args.nth(0).unwrap_or_default();
@@ -77,6 +79,17 @@ fn use_pre(action_args: &mut std::env::Args, kettle_name_warning: &str,
     }
 }
 
+fn get_pre(action_args: &mut std::env::Args, kettle_repo_path: &str,
+            kettle_name_warning: &str)
+{
+    let kettle;
+    kettle= action_args.nth(0).unwrap_or_default();
+
+    if check_default(&kettle, kettle_name_warning) {
+        let _ = get_action::handle_action(&kettle, kettle_repo_path);
+    }
+}
+
 pub fn handle_action(args: &mut std::env::Args, kettle_repo_path: &str)
 {
     let action = &args.nth(1).unwrap_or_default()[..];
@@ -94,6 +107,7 @@ pub fn handle_action(args: &mut std::env::Args, kettle_repo_path: &str)
         "exclude" => exclude_pre(args, file_name_warning),
         "use" => use_pre(action_args, kettle_name_warning, kettle_repo_path),
         "cli" => cli_action::handle_action(),
+        "get" => get_pre(action_args, kettle_repo_path, kettle_name_warning),
         "-h" | "--help" | "-help" | "help" => help_action::handle_action(),
         _ => println!("This command was not found, use -h for all the commands"),
     };

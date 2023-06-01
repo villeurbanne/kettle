@@ -21,6 +21,11 @@ use () {
     kettle use $NAME $FOLDER
 }
 
+get () {
+    VALUE=$(gum input --placeholder "enter the desired kettle <username@kettle>")
+    kettle get $VALUE
+}
+
 include () {
     FILES=()
     while :
@@ -68,7 +73,7 @@ end () {
 
 loop () {
 
-    CHOICE=$(gum choose help init include exclude save delete use list "" quit)
+    CHOICE=$(gum choose help init include exclude save delete use get list quit)
 
     if [ $CHOICE = 'help' ]; then
         kettle help
@@ -84,6 +89,8 @@ loop () {
         delete
     elif [ $CHOICE = 'use' ]; then
         use
+    elif [ $CHOICE = 'get' ]; then
+        get
     elif [ $CHOICE = 'list' ]; then
         kettle list
     elif [ $CHOICE = 'quit' ]; then

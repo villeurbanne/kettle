@@ -14,6 +14,7 @@ pub fn handle_action() {
     "  delete <kettle_name>                   : Deletes a kettle from the kettle repo"
     );
     println!("  use <kettle_name> <destination_folder> : Import a kettle to the destination_folder");
+    println!("  get <username@kettle>                  : Installs the desired kettle of the marketplace");
     println!("  list                                   : Lists all the kettles in the kettle repo");
     println!("  cli                                   : Launches the cli version of kettle");
     println!("");
