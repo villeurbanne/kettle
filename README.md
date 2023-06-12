@@ -3,9 +3,7 @@
 </div>
 
 ###
-
-# kettle 🫖
-
+<h1 align="center"> kettle 🫖 </h1>
 ###
 
 <p align="center">a glamourus boilerplate manager written in Rust 🦀</p>
