@@ -4,7 +4,7 @@
 
 ###
 
-<h1 align="center">kettle 🫖</h1>
+# kettle 🫖
 
 ###
 
