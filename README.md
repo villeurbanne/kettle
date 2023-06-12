@@ -1,10 +1,4 @@
 <div align="center">
-  <img height="150" src="https://i.imgflip.com/7fenww.gif"  />
-</div>
-
-###
-
-<div align="center">
   <img src="https://visitor-badge.laobi.icu/badge?page_id=villeurbanne.villeurbanne&right_color=violet"  />
 </div>
 
