@@ -27,7 +27,7 @@ get () {
 }
 
 include () {
-    FILES=()
+    declare -a FILES
     while :
     do
         FILE=$(gum file $HOME --directory)
@@ -46,7 +46,7 @@ include () {
 
 
 exclude () {
-    FILES=()
+    declare -a FILES
     while :
     do
         FILE=$(gum file $HOME --directory)

@@ -1,16 +1,10 @@
 <div align="center">
-  <img height="150" src="https://i.imgflip.com/7fenww.gif"  />
-</div>
-
-###
-
-<div align="center">
   <img src="https://visitor-badge.laobi.icu/badge?page_id=villeurbanne.villeurbanne&right_color=violet"  />
 </div>
 
 ###
 
-<h1 align="center">kettle 🫖</h1>
+<h1 align="center"> kettle 🫖 </h1>
 
 ###
 
@@ -50,10 +44,9 @@
 ###
 
 <br>
-<h3 align="center">Usage 🫖</h3>
+<h3>Usage 🫖</h3>
 <br>
 
-<div align="center">
 
   Start with : `kettle -h` to list all possible commands. <br>
   and `kettle cli` to show to cli client for kettle (not necessary).
@@ -78,8 +71,7 @@
   kettle use <name> <folder>
   # to use the <name> kettle in the desired folder.
   ```
-  
-</div>
+
 
 ###
 
