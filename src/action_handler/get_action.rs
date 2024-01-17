@@ -6,9 +6,14 @@ use zip::ZipArchive;
 
 fn get_kettle(client: &Client, kettle: &str) -> Result<String, Box<dyn std::error::Error>>
 {
+    let mut kettle = kettle.to_owned();
+    let mut parts = kettle.split('@');
+    let author = parts.next().unwrap();
+    let name = parts.next().unwrap();
+
     // Send a GET request to /marketplace/kettle
     let response = client
-        .get(format!("https://kettle.herokuapp.com/marketplace/{}", kettle))
+        .get(format!("https://huqgbqslpowxjqxbphux.supabase.co/storage/v1/object/public/kettles/{}/{}.zip", author, name))
         .send()?
         .text()?;
 
@@ -16,8 +21,8 @@ fn get_kettle(client: &Client, kettle: &str) -> Result<String, Box<dyn std::erro
     if response.contains("error") {
         return Err(response.into());
     }
-    
-    let url = response.trim().to_owned();
+
+    let url = format!("https://huqgbqslpowxjqxbphux.supabase.co/storage/v1/object/public/kettles/{}/{}.zip", author, name);
     Ok(url)
 }
 
@@ -27,23 +32,24 @@ fn download_kettle(url: &str, path: &Path, name: &str) -> Result<(), Box<dyn std
 
     // Send a GET request to the URL returned by the first request
     let mut response = client.get(url).send()?;
-    
+;
     // Create a new directory at the specified path
     fs::create_dir_all(path)?;
     println!("🫖 successfully installed '{}' kettle !\n", name);
-    
+
     let newpath = path.join(name);
     let mut file = File::create(&newpath)?;
-    
+
     // Copy the response body to the file
     copy(&mut response, &mut file)?;
 
     // Unzip the file at the specified path
     let mut archive = ZipArchive::new(File::open(&newpath)?)?;
     archive.extract(&newpath.parent().unwrap())?;
-    
+
+    // Remove the zip file
     fs::remove_file(&newpath)?;
-    
+
     Ok(())
 }
 
@@ -58,7 +64,7 @@ pub fn handle_action(kettle: &str, path: &str) -> Result<(), Box<dyn std::error:
     let parts: Vec<&str> = kettle.split('@').collect();
     let name = parts[1];
     let location = Path::new(path).join(name);
-    
+
     let client = Client::new();
     let url = match get_kettle(&client, kettle) {
         Ok(url) => url,
@@ -67,7 +73,7 @@ pub fn handle_action(kettle: &str, path: &str) -> Result<(), Box<dyn std::error:
             return Err(err);
         }
     };
-    
+
     if let Err(err) = download_kettle(&url, &location, name) {
         println!("⚠️ error : download failed for '{}' kettle", name);
         return Err(err);
