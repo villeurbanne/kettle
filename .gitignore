@@ -8,3 +8,4 @@ target/
 # files
 ressources/
 .vscode
+.idea
