@@ -6,7 +6,7 @@ use zip::ZipArchive;
 
 fn get_kettle(client: &Client, kettle: &str) -> Result<String, Box<dyn std::error::Error>>
 {
-    let mut kettle = kettle.to_owned();
+    let kettle = kettle.to_owned();
     let mut parts = kettle.split('@');
     let author = parts.next().unwrap();
     let name = parts.next().unwrap();
@@ -32,7 +32,7 @@ fn download_kettle(url: &str, path: &Path, name: &str) -> Result<(), Box<dyn std
 
     // Send a GET request to the URL returned by the first request
     let mut response = client.get(url).send()?;
-;
+
     // Create a new directory at the specified path
     fs::create_dir_all(path)?;
     println!("🫖 successfully installed '{}' kettle !\n", name);
