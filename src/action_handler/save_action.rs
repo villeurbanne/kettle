@@ -8,19 +8,18 @@ struct Recipe {
     name: String,
     imported_files: Vec<String>,
     kettle_path: String,
+    init: Vec<String>,
 }
 
 pub fn handle_action(kettle_repo_path: &str) {
     if Path::new("kettle.json").exists() {
         let kettle_recipe = fs::read_to_string("kettle.json")
-            .expect("\nError encountered while reading the recipe file");
+            .expect("Error encountered while reading the recipe file");
 
         let recipe_json: Recipe = serde_json::from_str(&kettle_recipe)
-            .expect("\nError encountered while deserialising the json recipe");
+            .expect("Error encountered while deserialising the json recipe");
 
-        let kettle_path = vec![kettle_repo_path.to_string(), recipe_json.name].concat();
-
-        for file_name in recipe_json.imported_files {
+        let kettle_path = vec![kettle_repo_path.to_string(), recipe_json.name].concat(); for file_name in recipe_json.imported_files {
             let kettle_repo_file =
                 vec![kettle_path.to_string(), "/".to_string(), file_name.clone()].concat();
 
@@ -40,10 +39,10 @@ pub fn handle_action(kettle_repo_path: &str) {
             }
 
             fs::copy(file_name, kettle_repo_file)
-                .expect("\nError encountered copying files from repo to the destination folder");
+                .expect("Error encountered copying files from repo to the destination folder");
         }
-        println!("\n✅ kettle successfully saved !");
+        println!("✅  kettle successfully saved !");
     } else {
-        println!("\n⚠️  initialise a kettle first")
+        println!("⚠️  initialise a kettle first")
     }
 }

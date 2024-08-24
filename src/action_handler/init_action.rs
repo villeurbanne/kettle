@@ -9,6 +9,7 @@ struct Recipe {
     name: String,
     imported_files: Vec<String>,
     kettle_path: String,
+    init: Vec<String>,
 }
 
 pub fn handle_action(kettle_name: &str, kettle_repo_path: &str) {
@@ -17,36 +18,37 @@ pub fn handle_action(kettle_name: &str, kettle_repo_path: &str) {
     let new_kettle_path = new_kettle_vector.concat();
 
     if !Path::new(&new_kettle_path).exists() {
-        fs::create_dir(new_kettle_path).expect("\nError encountered while creating kettle");
+        fs::create_dir(new_kettle_path).expect("Error encountered while creating kettle");
 
         let repo_new_file_path_vector = vec![kettle_repo_path, kettle_name, "/kettle.json"];
 
         let repo_new_file_path = repo_new_file_path_vector.concat();
 
         let mut repo_file =
-            File::create(repo_new_file_path).expect("\nError encountered while creating file!");
+            File::create(repo_new_file_path).expect("Error encountered while creating file!");
 
         let mut local_file =
-            File::create("./kettle.json").expect("\nError encountered while creating file!");
+            File::create("./kettle.json").expect("Error encountered while creating file!");
 
         let new_recipe = Recipe {
             name: kettle_name.to_owned(),
             imported_files: vec!["kettle.json".to_string()],
             kettle_path: repo_new_file_path_vector.concat(),
+            init: vec![],
         };
 
         let new_recipe_json = serde_json::to_string_pretty(&new_recipe).unwrap();
 
         repo_file
             .write_all(new_recipe_json.as_bytes())
-            .expect("\nError while writing to file");
+            .expect("Error while writing to file");
 
         local_file
             .write_all(new_recipe_json.as_bytes())
-            .expect("\nError while writing to file");
+            .expect("Error while writing to file");
 
-        println!("\n✅ kettle successfully initialised !");
+        println!("✅ kettle successfully initialised !");
     } else {
-        println!("\n⚠️  A kettle already exists with this name")
+        println!("⚠️  A kettle already exists with this name")
     }
 }

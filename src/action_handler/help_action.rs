@@ -1,5 +1,5 @@
 pub fn handle_action() {
-    println!("\n * Welcome to Kettle 🫖    * ");
+    println!(" * Welcome to Kettle 🫖    * ");
     println!(" * the boilerplate manager *");
     println!("");
     println!("COMMANDS:");
@@ -19,6 +19,6 @@ pub fn handle_action() {
     println!("  cli                                   : Launches the cli version of kettle");
     println!("");
     println!("- created with ❤️  by poopy");
-    println!("- https://github.com/villeurbanne\n");
+    println!("- https://github.com/villeurbanne");
 }
 

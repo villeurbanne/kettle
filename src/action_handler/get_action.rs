@@ -35,7 +35,7 @@ fn download_kettle(url: &str, path: &Path, name: &str) -> Result<(), Box<dyn std
 
     // Create a new directory at the specified path
     fs::create_dir_all(path)?;
-    println!("🫖 successfully installed '{}' kettle !\n", name);
+    println!("🫖  successfully installed '{}' kettle !\n", name);
 
     let newpath = path.join(name);
     let mut file = File::create(&newpath)?;
@@ -75,7 +75,7 @@ pub fn handle_action(kettle: &str, path: &str) -> Result<(), Box<dyn std::error:
     };
 
     if let Err(err) = download_kettle(&url, &location, name) {
-        println!("⚠️ error : download failed for '{}' kettle", name);
+        println!("⚠️  error : download failed for '{}' kettle", name);
         return Err(err);
     }
 
